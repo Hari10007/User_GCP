@@ -20,7 +20,7 @@ def get_db():
 
 
 # Endpoint to create a new user
-@app.post("/users/", response_model=schemas.User)
+@app.post("/users/", tags=["Users"], response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
     if db_user:
@@ -29,14 +29,14 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 
 # Endpoint to retrieve all users
-@app.get("/users/", response_model=list[schemas.User])
+@app.get("/users/", tags=["Users"], response_model=list[schemas.User])
 def read_users(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     users = crud.get_users(db, skip=skip, limit=limit)
     return users
 
 
 # Endpoint to update a user by ID
-@app.patch("/users/{user_id}", response_model=schemas.User)
+@app.patch("/users/{user_id}", tags=["Users"], response_model=schemas.User)
 def update_user(user_id: int, user: schemas.UserUpdate, db: Session = Depends(get_db)):
     db_user = crud.get_user(db, user_id=user_id)
     if db_user is None:
@@ -45,7 +45,7 @@ def update_user(user_id: int, user: schemas.UserUpdate, db: Session = Depends(ge
 
 
 # Endpoint to delete a user by ID
-@app.delete("/users/{user_id}", response_model=schemas.User)
+@app.delete("/users/{user_id}", tags=["Users"], response_model=schemas.User)
 def delete_user(user_id: int, db: Session = Depends(get_db)):
     db_user = crud.get_user(db, user_id=user_id)
     if db_user is None:
@@ -53,10 +53,10 @@ def delete_user(user_id: int, db: Session = Depends(get_db)):
     return crud.delete_user(db=db, user_id=user_id)
 
 
-@app.post("/send_invite")
+@app.post("/send_invite", tags=["Send mail"])
 def send_invite():
     sender_email = "harikrishnansr1007@gmail.com"
-    recipients = ["harikrishnansr007@gmail.com", "harikrishnansr1007@gmail.com"]
+    recipients = ["shraddha@aviato.consulting", "pooja@aviato.consulting"]
     subject = "API Documentation Invitation"
     body = """
     <html>
