@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Date
 from user_gcp.database import Base
 
 class User(Base):
@@ -8,3 +8,9 @@ class User(Base):
     username = Column(String, index=True)
     email = Column(String, unique=True, index=True)
     project_id = Column(Integer, index=True)
+    company_name = Column(String, index=True)
+    first_name = Column(String, index=True)
+    last_name = Column(String, index=True)
+    password = Column(String)
+    mobile_number = Column(String, index=True)
+    date_of_birth = Column(Date)  
